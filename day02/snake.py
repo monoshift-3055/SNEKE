@@ -36,7 +36,7 @@ title_rect = title_text.get_rect() # gets the box containing the text object
 title_rect.center = (WINDOW_WIDTH//2, WINDOW_HEIGHT//2) # places the box containing the text object's center to the middle of the screen.
 
 #TODO: make a score_text object and assign a font render to it with text "Score: 0", antialias of True, color of GREEN, background color of DARKRED
-score_text = font.render("Score: " + str(score), True, GREEN, DARKRED)
+score_text = font.render("Score: 0" + str(score), True, GREEN, DARKRED)
 #TODO: make a score_rect object by assigning score_text.get_rect() to it.
 score_rect = score_text.get_rect()
 #TODO: place the topleft of score_rect to an x coordinate of 10 and y coordinate of 10
@@ -89,14 +89,54 @@ while running:
     # Check for collisions
 
     # Update HUD
+    # TODO: reassign to score_text much like you did previously, but now the text should be an f-string: f"Score: {score}"
+    score_text = font.render(f"Score: {score} ", True, GREEN, DARKRED)
+    # TODO: same todo just ran out of room:  use same settings for alias, color, and background color
 
     # Fill the surface
-
+    # TODO: Read below.  One TODO, require's explanation
+    ''' 
+    The display_surface has a function we can use called fill, which takes one color argument.  
+    The act of using display_surface's fill is said as
+    "Call display_surface's fill function and pass WHITE in as it's argument."
+    It looks like this:  
+    1. display_surface.fill(WHITE)
+    '''
+    display_surface.fill(WHITE)
     # Blit HUD
+    # TODO: Read below.  2 TODO's, require's explanation
+    '''
+    Blitting means copying an image from it's source (the code) to it's destination (the display) 
+    This is necessary after updating the source (score changes, snake, and apple change etc.)
+    1. "Call display_surface's blit function.  It takes 2 arguments, text and rect surrounding that text.  
+    Pass in title_text and title_rect to blit the title to the screen
+    2. repeat for a new call to display_surface's blit function passing in score_text and score_rect.  
+    "We've just told the title and score to display.  
+    '''
+    display_surface.blit(title_text, title_rect)
 
     # Blit assets
+    # TODO: Read below.  2 TODO's, require's explanation
+    '''
+    Calling pygame.draw.rect is a way to blit rectangles.  
+    The blit function for display_surface is for direct blitting.  
+    2 ways to do similar things.  Update the display
+    1. "Call pygame.draw.rect and passing in display_surface, GREEN, and head_coord for the head of the snake
+    2. "Call pygame.draw.rct again pass in display_surface, RED, and apple_coord for the apple.  
+    '''
+    pygame.draw.rect(display_surface, GREEN, head_coord)
+    pygame.draw.rect(display_surface, RED, apple_coord)
 
     # Update display and tick clock
-
+    # TODO: Read below. 2 TODO's, require's explanation
+    '''
+    1. Now we update the display by calling pygame.display's update function passing in no arguments.
+    2. The while loop we are in is super fast.  We actually need to slow it down to our FPS of 20 seconds.  
+    That's what our clock variable will do for us.  What until 20 frames have passed every second.  Then continue.  
+    This is ticking the clock.   
+    to tick the clock call the clock object's tick function passing in FPS
+    '''
+    pygame.display.update()
+    Clock.tick(FPS)
 # End the game
 pygame.quit()
